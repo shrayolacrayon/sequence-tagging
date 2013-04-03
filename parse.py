@@ -20,5 +20,7 @@ def parse (filename):
     else:
       sentiments[rid] = line.strip("{} ")
 
+  return(ratings, sentiments)
+
 
 
