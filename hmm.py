@@ -1,8 +1,10 @@
 #hmm.py
 
 import nltk
+
 import parse
 import train
+
 
 import os
 path = 'train/'
@@ -16,3 +18,4 @@ for fname in listing:
   print "SENTS"
   #print sents
   print train.create_probabilities(sents, 1)
+
