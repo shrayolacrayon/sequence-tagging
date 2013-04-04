@@ -2,10 +2,11 @@
 
 import nltk
 import parse
+import train
 
 ratings,sents=  parse.parse('train/ScottRenshaw_train.txt')
 print "RATINGS"
 print ratings
 print "SENTS"
 #print sents
-#TODO: 
+print train.create_probabilities(sents, 0)
