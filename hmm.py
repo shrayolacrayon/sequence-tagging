@@ -4,9 +4,15 @@ import nltk
 import parse
 import train
 
-ratings,sents=  parse.parse('train/ScottRenshaw_train.txt')
-print "RATINGS"
-print ratings
-print "SENTS"
-#print sents
-print train.create_probabilities(sents, 0)
+import os
+path = 'train/'
+
+listing = os.listdir(path)
+#iterate through listing
+for fname in listing:
+  ratings,sents=  parse.parse(path + fname)
+  print "RATINGS"
+  print ratings
+  print "SENTS"
+  #print sents
+  print train.create_probabilities(sents, 1)

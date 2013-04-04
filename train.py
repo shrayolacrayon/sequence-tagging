@@ -29,7 +29,7 @@ def map_grams(sentiments, gramType):
 def normalize_p(sents):
   normalized = []
   slen = float(len(sents))
-  for x in range(-2,2):
+  for x in range(-2,3):
     normalized.append(sents.count(x)/slen)
   return normalized
 
