@@ -1,3 +1,5 @@
+import nltk
+
 def createBMatrix(ngrams, ngramProbs):
 	matrix= {}
 	for ngram in ngrams:
@@ -71,3 +73,13 @@ def stateConverter(state):
 		count= 4
 	else:
 		count= 5
+
+def create_gram_list(sentiments, gramType):
+  gram_list = []
+  for key in sentiments:
+    sent_list = sentiments[key]
+    for (string, sent) in sent_list:
+      tokens = nltk.word_tokenize(string)
+      grams = nltk.util.ngrams(tokens,gramType)
+      gram_list.append(grams)
+  return gram_list

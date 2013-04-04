@@ -42,3 +42,14 @@ def create_probabilities(sentiments, gramType):
   return matrix
 
 
+def create_gram_list(sentiments, gramType):
+  gram_list = []
+  for key in sentiments:
+    sent_list = sentiments[key]
+    for (string, sent) in sent_list:
+      tokens = nltk.word_tokenize(string)
+      grams = nltk.util.ngrams(tokens,n)
+      gram_list.append(grams)
+  return gram_list
+
+

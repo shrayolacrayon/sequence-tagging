@@ -2,6 +2,13 @@ def parse_rating(string):
   splitted = string.split('/');
   return (splitted[0], splitted[1].strip('] '))
 
+def is_int(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 def parse (filename):
   #dictionary ratings has the key, review_id with the rating given
   #note ratings are different for different authors
@@ -25,7 +32,11 @@ def parse (filename):
       else:
         first = lsplit[0].strip("{} ")
         second = lsplit[1].strip("> ")
-        sentiments[rid].append((first,int(second)))
+        if is_int(second):
+          s = int(second)
+        else:
+          s = second
+        sentiments[rid].append((first,s))
 
   return(ratings, sentiments)
 
