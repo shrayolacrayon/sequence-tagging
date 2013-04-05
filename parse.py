@@ -1,3 +1,4 @@
+
 def parse_rating(string):
   splitted = string.split('/');
   return (splitted[0], splitted[1].strip('] '))
@@ -16,6 +17,8 @@ def parse (filename):
   #key = review-id, value is a list of tuples with sentiment 
   #and the actual phrase
   sentiments= {}
+
+  sent_list = []
   rid = "null"
   files = open(filename)
   for line in files:
@@ -37,8 +40,9 @@ def parse (filename):
         else:
           s = second
         sentiments[rid].append((first,s))
+        sent_list.append((first,s))
 
-  return(ratings, sentiments)
+  return(ratings, sentiments, sent_list)
 
 
 
