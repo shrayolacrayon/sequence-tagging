@@ -28,6 +28,21 @@ def map_grams(sentiments, gramType):
         ngrams(tokens,3, sent, mapped)
   return mapped
 
+
+#creates a dictionary of the number of each ngram in a sentece given a
+#sentence, ngram type, and the index of the sentence in the list
+def count_ngrams(sentence, n, index,ngram_dict):
+  tokens = nltk.word_tokenize(sentence) 
+  ngrams(tokens, n, index, ngram_dict)
+
+def ngrams_index (slist,n):
+  ngram_dict = {}
+  for i,(s,sent) in enumerate(slist):
+    count_ngrams(s,n, i, ngram_dict)
+  return ngram_dict
+
+
+
 #given a list sentiments, calculate the percentage of each sentiment
 def normalize_p(sents):
   normalized = []
@@ -54,15 +69,18 @@ def normalize(matrix):
     normalized[i] = float(m)/len(matrix)
   return normalized
 
+def count_sents(slist):
+  for (string, sent) in sent_list:
+      s_count[sent_to_index(sent)] += 1
+  return normalize(s_count)
+
 #counts the number of sentiments
 def count_sentiments(sentiments):
   #create a 1 * 5 matrix of s_count
   s_count = [0] * 5
   for key in sentiments:
     sent_list = sentiments[key]
-    for (string, sent) in sent_list:
-      s_count[sent_to_index(sent)] += 1
-  return normalize(s_count)
+    return count_sents(sent_list)
 
 #creates a matrix of the previous sentiments given sentiment i
 def calc_prev_matrix (i, slist, c):
@@ -86,6 +104,31 @@ def sentiment_i_j(sent_list, count_s):
   for i in range (-2, 3):
     s_matrix.append(calc_prev_matrix(i,sent_list,count_s))
   return s_matrix
+
+
+#p(o|s) = p(s|o) * p(o)/ p(s)
+def one_observation(observation,sentiments, slist):
+  num_sents = normalize(count_sents(observation))
+  full_sentiments = count_sentiments(sentiments)
+  full = [] * len(num_sents)
+  prob_o = len(observation)/len()
+  for i,n in enumerate(num_sents):
+    full[i] = (n * prob_o)/full_sentiments[i]
+  return full
+
+
+def observation_state(observations, slist,sentiments):
+  matrx = []
+  for o in observation:
+    matrx.append(one_observation(o,slist,sentiments))
+  return matrx
+
+
+
+
+
+
+
 
 
 
