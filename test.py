@@ -1,28 +1,19 @@
 import nltk
 
-def createBMatrix(ngrams, ngramProbs):
-	matrix= {}
-	for ngram in ngrams:
-		if ngram in ngramProbs:
-			matrix[ngram]=ngramProbs[ngram]
-		else:
-			matrix[ngram]=[0.1,0.1,0.1,0.1,0.1]
-	return matrix
-
 #aMatrix and bMatrix are dicts, ngramSentence and stateList are lists
-def virterbiTotal(aMatrix, bMatrix, ngramSentence, stateList):
+def virterbiTotal(aMatrix, bMatrix, observationList):
 	vertMatrix= {}
 	backPointer= {}
-	for x in range(0,len(stateList)):
-		vertMatrix[stateList[x]]=[]
-		vertMatrix[stateList[x]].append(aMatrix[stateList[x]][0] * bMatrix[ngramSentence[0]][stateConverter(stateList[x])])
-		backPointer[stateList[x]]= []
-		backPointer[stateList[x]].append(0)
-	for t in range(1,len(ngramSentence)):
-		for s in range(0,len(stateList)):
-			(mState, mNum)= virterbiMax(vertMatrix,(t-1), aMatrix, stateList, s)
-			vertMatrix[stateList[s]].append(mNum * bMatrix[ngramSentence[t]][stateConverter[s]])
-			backPointer[stateList[s]][t].append(mState)
+	for x in range(0,5):
+		vertMatrix[stateConverter(x)]=[]
+		vertMatrix[stateConverter(x)].append(1 * bMatrix[0][x])
+		backPointer[stateConverter(x)]= []
+		backPointer[stateConverter(x)].append(0)
+	for t in range(1,len(observationList)):
+		for s in range(0,5):
+			(mState, mNum)= virterbiMax(vertMatrix,(t-1), aMatrix, s)
+			vertMatrix[stateConverter(s)].append(mNum * bMatrix[observationList[t][s]])
+			backPointer[stateConverter(s)].append(mState)
 
 	(finState, finNum)= finalVert(vertMatrix,-1,aMatrix,stateList)
 
@@ -41,11 +32,11 @@ def createBackTrack(backPointer):
 	return back
 
 
-def virterbiMax(vertMatrix, counter, aMatrix, stateList, s):
+def virterbiMax(vertMatrix, counter, aMatrix, s):
 	maxNum= 0.0
 	maxState= 3.0
 	for vert in vertMatrix:
-		varying= vertMatrix[vert][counter] * aMatrix[stateList[s]][stateConverter(vert)]
+		varying= vertMatrix[vert][counter] * aMatrix[s][stateConverterOpp(vert)]
 		if varying >= maxNum:
 			maxNum= varying
 			maxState= vert
@@ -61,18 +52,33 @@ def finalVert(vertMatrix, counter, aMatrix, stateList):
 			fiState= vert
 	return fiState, fiNum
 
-def stateConverter(state):
-	count=0;
-	if state == -2:
-		count= 1
-	elif state == -1:
-		count= 2
-	elif state == 0:
-		count= 3
-	elif state == 1:
-		count= 4
+def stateConverter(number):
+	stateI=0;
+	if number == 0:
+		stateI= -2
+	elif number == 1:
+		stateI= -1
+	elif number == 2:
+		stateI= 0
+	elif number == 3:
+		stateI= 1
 	else:
-		count= 5
+		stateI= 2
+	return stateI
+
+def stateConverterOpp(state):
+	nums=0;
+	if state == -2:
+		nums= 0
+	elif state == -1:
+		nums= 1
+	elif state == 0:
+		nums= 2
+	elif state == 1:
+		nums= 3
+	else:
+		nums= 4
+	return nums
 
 def create_gram_list(sentiments, gramType):
   gram_list = []
