@@ -15,18 +15,18 @@ def virterbiTotal(aMatrix, bMatrix, observationList):
 			vertMatrix[stateConverter(s)].append(mNum * bMatrix[observationList[t][s]])
 			backPointer[stateConverter(s)].append(mState)
 
-	(finState, finNum)= finalVert(vertMatrix,-1,aMatrix,stateList)
+	(finState, finNum)= finalVert(vertMatrix,-1)
 
 	vertMatrix["final"]= finNum
 	backPointer["final"]= finState
-	return createBackTrack(backPointer)
+	return createBackTrack(backPointer,observationList)
 
 
-def createBackTrack(backPointer):
+def createBackTrack(backPointer,observationList):
 	back=[backPointer["final"]]
 	last= backPointer["final"]
 	for t in range(2,len(ngramSentence)):
-		current= backPointer[last][len(ngramSentence)-t]
+		current= backPointer[last][len(observationList)-t]
 		back.append(current)
 		last= current
 	return back
@@ -42,11 +42,11 @@ def virterbiMax(vertMatrix, counter, aMatrix, s):
 			maxState= vert
 	return maxState, maxNum	
 
-def finalVert(vertMatrix, counter, aMatrix, stateList):
+def finalVert(vertMatrix, counter):
 	fiNum= 0.0
 	fiState= 3.0
 	for vert in vertMatrix:
-		fin= vertMatrix[vert][counter] * aMatrix["final"][stateConverter(vert)]
+		fin= vertMatrix[vert][counter]
 		if fin >= fiNum:
 			fiNum= fin
 			fiState= vert
