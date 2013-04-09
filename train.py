@@ -65,8 +65,9 @@ def sent_to_index(sentiment):
 #normalizes matrix m
 def normalize(matrix):
   normalized= [0.0] * len(matrix)
+  summed = sum(matrix)
   for i,m in enumerate(matrix):
-    normalized[i] = float(m)/len(matrix)
+    normalized[i] = float(m)/summed
   return normalized
 
 def count_sents(slist):
@@ -108,14 +109,18 @@ def sentiment_i_j(sent_list, count_s):
   return s_matrix
 
 
-#TODO WORK ON THIS
-
+def obs_states(observation):
+  counter = [0] * 5
+  for sentence, state in observation:
+    counter[sent_to_index(state)] += 1
+  return normalize(counter)
 #p(o|s) = p(s|o) * p(o)/ p(s)
+
 def one_observation(observation,sentiments, slist):
-  num_sents = normalize(count_sents(observation))
+  num_sents=  obs_states(observation)
   full_sentiments = count_sentiments(sentiments)
-  full = [] * len(num_sents)
-  prob_o = len(observation)/len(sentiments)
+  full = [0] * 5
+  prob_o = float(len(observation))/len(slist)
   for i,n in enumerate(num_sents):
     full[i] = (n * prob_o)/full_sentiments[i]
   return full
