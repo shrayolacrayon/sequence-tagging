@@ -70,9 +70,11 @@ def normalize(matrix):
   return normalized
 
 def count_sents(slist):
-  for (string, sent) in sent_list:
+  s_count = [0] * 5
+  for (string, sent) in slist:
       s_count[sent_to_index(sent)] += 1
   return normalize(s_count)
+
 
 #counts the number of sentiments
 def count_sentiments(sentiments):
@@ -106,12 +108,14 @@ def sentiment_i_j(sent_list, count_s):
   return s_matrix
 
 
+#TODO WORK ON THIS
+
 #p(o|s) = p(s|o) * p(o)/ p(s)
 def one_observation(observation,sentiments, slist):
   num_sents = normalize(count_sents(observation))
   full_sentiments = count_sentiments(sentiments)
   full = [] * len(num_sents)
-  prob_o = len(observation)/len()
+  prob_o = len(observation)/len(sentiments)
   for i,n in enumerate(num_sents):
     full[i] = (n * prob_o)/full_sentiments[i]
   return full
@@ -119,8 +123,8 @@ def one_observation(observation,sentiments, slist):
 
 def observation_state(observations, slist,sentiments):
   matrx = []
-  for o in observation:
-    matrx.append(one_observation(o,slist,sentiments))
+  for o in observations:
+    matrx.append(one_observation(o,sentiments,slist))
   return matrx
 
 

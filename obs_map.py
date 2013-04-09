@@ -28,7 +28,8 @@ def max_each_sent(ngram_dict, slist):
     for s in sent_list:
       if added[s] == 0:
         added[s] += 1
-        o_n.append(s)
+        a =slist[s]
+        o_n.append(a)
     if o_n != []:
       observations.append(o_n)
     list_index += 1
