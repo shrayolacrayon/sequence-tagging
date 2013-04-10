@@ -125,7 +125,6 @@ def one_observation(observation,count_s, slist):
     full[i] = (n * prob_o)/count_s[i]
   return normalize(full)
 
-
 def observation_state(observations, slist,count_s):
   matrx = []
   for o in observations:
@@ -157,6 +156,8 @@ def initialProb(sents):
   print initialProbs
   #print initialProbs
   return initialProbs
+
+
 
 
 
