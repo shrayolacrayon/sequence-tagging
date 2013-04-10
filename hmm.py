@@ -17,9 +17,7 @@ testlisting = os.listdir(testpath)
 for fname in listing:
   ratings,sents, slist=  parse.parse(path + fname)
   print "RATINGS"
-  #print ratings
   print "SENTS"
-  #print slist
   print "P(sent)"
   count_s =  train.count_sentiments(sents)
   print count_s
@@ -28,8 +26,9 @@ for fname in listing:
   print "creating ngram..."
   ngram_dict= train.ngrams_index(slist,3)
   print "OBSERVATIONS"
-  observations= obs_map.max_each_sent(ngram_dict,slist)
+  observations, obs_indexes= obs_map.max_each_sent(ngram_dict,slist)
   print observations
+  print obs_indexes
   print "OBS PROBS"
   #print train.observation_state(observations,slist,count_s)
   

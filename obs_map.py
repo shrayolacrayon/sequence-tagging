@@ -16,6 +16,7 @@ def dict_to_tuple(ngram_dict):
 #ngram method- group the sentences by ones with the most similar ngrams
 def max_each_sent(ngram_dict, slist):
   observations = []
+  obs_index = []
   sorted_list = dict_to_tuple(ngram_dict)
   #added into an observation
   added = [0] * len(slist)
@@ -24,15 +25,18 @@ def max_each_sent(ngram_dict, slist):
     amt, ngram = sorted_list[list_index]
     sent_list = ngram_dict[ngram] 
     o_n = []
+    o_i = []
     for s in sent_list:
       if added[s] == 0:
         added[s] += 1
         a =slist[s]
+        o_i.append(s)
         o_n.append(a)
     if o_n != []:
       observations.append(o_n)
+      obs_index.append(o_i)
     list_index += 1
-  return observations
+  return observations, obs_index
 
 
 
@@ -41,7 +45,7 @@ def sent_to_obs(ngram_dict, slist, function):
   if function == "ngram":
     return max_each_sent(ngram_dict,slist)
   else:
-    return []
+    return [],[]
   
 
 
