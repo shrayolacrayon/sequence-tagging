@@ -114,22 +114,21 @@ def obs_states(observation):
   for sentence, state in observation:
     counter[sent_to_index(state)] += 1
   return normalize(counter)
-#p(o|s) = p(s|o) * p(o)/ p(s)
 
-def one_observation(observation,sentiments, slist):
+#p(o|s) = p(s|o) * p(o)/ p(s)
+def one_observation(observation,count_s, slist):
   num_sents=  obs_states(observation)
-  full_sentiments = count_sentiments(sentiments)
   full = [0] * 5
   prob_o = float(len(observation))/len(slist)
   for i,n in enumerate(num_sents):
-    full[i] = (n * prob_o)/full_sentiments[i]
-  return full
+    full[i] = (n * prob_o)/count_s[i]
+  return normalize(full)
 
 
-def observation_state(observations, slist,sentiments):
+def observation_state(observations, slist,count_s):
   matrx = []
   for o in observations:
-    matrx.append(one_observation(o,sentiments,slist))
+    matrx.append(one_observation(o,count_s,slist))
   return matrx
 
 
