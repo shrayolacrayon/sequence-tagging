@@ -28,6 +28,21 @@ def map_grams(sentiments, gramType):
         ngrams(tokens,3, sent, mapped)
   return mapped
 
+
+#creates a dictionary of the number of each ngram in a sentece given a
+#sentence, ngram type, and the index of the sentence in the list
+def count_ngrams(sentence, n, index,ngram_dict):
+  tokens = nltk.word_tokenize(sentence) 
+  ngrams(tokens, n, index, ngram_dict)
+
+def ngrams_index (slist,n):
+  ngram_dict = {}
+  for i,(s,sent) in enumerate(slist):
+    count_ngrams(s,n, i, ngram_dict)
+  return ngram_dict
+
+
+
 #given a list sentiments, calculate the percentage of each sentiment
 def normalize_p(sents):
   normalized = []
@@ -50,9 +65,17 @@ def sent_to_index(sentiment):
 #normalizes matrix m
 def normalize(matrix):
   normalized= [0.0] * len(matrix)
+  summed = sum(matrix)
   for i,m in enumerate(matrix):
-    normalized[i] = float(m)/len(matrix)
+    normalized[i] = float(m)/summed
   return normalized
+
+def count_sents(slist):
+  s_count = [0] * 5
+  for (string, sent) in slist:
+      s_count[sent_to_index(sent)] += 1
+  return normalize(s_count)
+
 
 #counts the number of sentiments
 def count_sentiments(sentiments):
@@ -60,9 +83,7 @@ def count_sentiments(sentiments):
   s_count = [0] * 5
   for key in sentiments:
     sent_list = sentiments[key]
-    for (string, sent) in sent_list:
-      s_count[sent_to_index(sent)] += 1
-  return normalize(s_count)
+    return count_sents(sent_list)
 
 #creates a matrix of the previous sentiments given sentiment i
 def calc_prev_matrix (i, slist, c):
@@ -86,6 +107,36 @@ def sentiment_i_j(sent_list, count_s):
   for i in range (-2, 3):
     s_matrix.append(calc_prev_matrix(i,sent_list,count_s))
   return s_matrix
+
+
+def obs_states(observation):
+  counter = [0] * 5
+  for sentence, state in observation:
+    counter[sent_to_index(state)] += 1
+  return normalize(counter)
+
+#p(o|s) = p(s|o) * p(o)/ p(s)
+def one_observation(observation,count_s, slist):
+  num_sents=  obs_states(observation)
+  full = [0] * 5
+  prob_o = float(len(observation))/len(slist)
+  for i,n in enumerate(num_sents):
+    full[i] = (n * prob_o)/count_s[i]
+  return normalize(full)
+
+
+def observation_state(observations, slist,count_s):
+  matrx = []
+  for o in observations:
+    matrx.append(one_observation(o,count_s,slist))
+  return matrx
+
+
+
+
+
+
+
 
 
 
