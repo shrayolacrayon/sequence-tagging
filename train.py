@@ -70,20 +70,21 @@ def normalize(matrix):
     normalized[i] = float(m)/summed
   return normalized
 
-def count_sents(slist):
-  s_count = [0] * 5
+def count_sents(slist, s_count):
   for (string, sent) in slist:
       s_count[sent_to_index(sent)] += 1
-  return normalize(s_count)
+  return s_count
 
 
-#counts the number of sentiments
+#counts the number of sentiments and normalizes it
 def count_sentiments(sentiments):
   #create a 1 * 5 matrix of s_count
   s_count = [0] * 5
   for key in sentiments:
     sent_list = sentiments[key]
-    return count_sents(sent_list)
+    count_sents(sent_list, s_count)
+  return normalize(s_count)
+
 
 #creates a matrix of the previous sentiments given sentiment i
 def calc_prev_matrix (i, slist, c):
