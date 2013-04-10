@@ -125,12 +125,13 @@ def one_observation(observation,count_s, slist):
     full[i] = (n * prob_o)/count_s[i]
   return normalize(full)
 
-
 def observation_state(observations, slist,count_s):
   matrx = []
   for o in observations:
     matrx.append(one_observation(o,count_s,slist))
   return matrx
+
+
 
 
 
