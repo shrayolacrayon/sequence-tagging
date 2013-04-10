@@ -19,6 +19,8 @@ def parse (filename):
   sentiments= {}
 
   sent_list = []
+ 
+ 
   rid = "null"
   files = open(filename)
   for line in files:
@@ -27,6 +29,7 @@ def parse (filename):
       (rid,rating) = parse_rating(line[1:-1])
       ratings[rid] = rating
       sentiments[rid] = []
+     
     else:
       line_stripped = line.strip()
       lsplit = line_stripped.split('<')
@@ -41,6 +44,7 @@ def parse (filename):
           s = second
         sentiments[rid].append((first,s))
         sent_list.append((first,s))
+       
 
   return(ratings, sentiments, sent_list)
 

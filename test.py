@@ -1,12 +1,12 @@
 import nltk
 
 #aMatrix and bMatrix are dicts, ngramSentence and stateList are lists
-def virterbiTotal(aMatrix, bMatrix, observationList):
+def virterbiTotal(aMatrix, bMatrix, observationList, initProbs):
 	vertMatrix= {}
 	backPointer= {}
 	for x in range(0,5):
 		vertMatrix[stateConverter(x)]=[]
-		vertMatrix[stateConverter(x)].append(1 * bMatrix[0][x])
+		vertMatrix[stateConverter(x)].append(initProbs[x] * bMatrix[0][x])
 		backPointer[stateConverter(x)]= []
 		backPointer[stateConverter(x)].append(0)
 	for t in range(1,len(observationList)):
@@ -28,7 +28,7 @@ def createBackTrack(backPointer,observationList):
 		current= backPointer[last][len(observationList)-t]
 		back.append(current)
 		last= current
-	return back
+	return back.reverse()
 
 
 def virterbiMax(vertMatrix, counter, aMatrix, s):

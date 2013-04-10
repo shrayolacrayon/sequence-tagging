@@ -131,6 +131,32 @@ def observation_state(observations, slist,count_s):
     matrx.append(one_observation(o,count_s,slist))
   return matrx
 
+def initialProb(sents):
+  first_sentiments=[]
+  for sentences in sents:
+    first_sentiments.append(sents[sentences][0][1])
+  #print first_sentiments
+  initialProbs= [0] * 5
+  for sentiment in first_sentiments:
+    if sentiment == -2:
+      initialProbs[0]= initialProbs[0] + 1
+    elif sentiment == -1:
+      initialProbs[1]= initialProbs[1]+1
+    elif sentiment == 0:
+      initialProbs[2] = initialProbs[2]+1
+    elif sentiment == 1:
+      initialProbs[3]= initialProbs[3] + 1
+    else:
+      initialProbs[4]= initialProbs[4]+1
+  #print initialProbs
+  
+  for i in range(0,5):
+    initialProbs[i]=initialProbs[i]/float(len(first_sentiments))
+    
+  print initialProbs
+  #print initialProbs
+  return initialProbs
+
 
 
 

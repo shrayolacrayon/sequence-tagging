@@ -86,8 +86,6 @@ def group_by_ngrams(ngram_dict, slist, ngrams, unknown_ind, bound):
   return mapped
 
 
-
-
 #returns a list of list of observations
 def sent_to_obs(ngram_dict, slist, function):
   if function == "ngram":
