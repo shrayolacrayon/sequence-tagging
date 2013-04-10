@@ -38,8 +38,6 @@ def max_each_sent(ngram_dict, slist):
     list_index += 1
   return observations, obs_index
 
-
-
 #returns a list of list of observations
 def sent_to_obs(ngram_dict, slist, function):
   if function == "ngram":
