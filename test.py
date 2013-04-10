@@ -21,7 +21,6 @@ def virterbiTotal(aMatrix, bMatrix, observationList):
 	backPointer["final"]= finState
 	return createBackTrack(backPointer,observationList)
 
-
 def createBackTrack(backPointer,observationList):
 	back=[backPointer["final"]]
 	last= backPointer["final"]
