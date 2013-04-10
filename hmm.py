@@ -24,12 +24,18 @@ for fname in listing:
   count_s =  train.count_sentiments(sents)
   print count_s
   print "S i|j"
-  print train.sentiment_i_j(slist, count_s)
+  aMatrix= train.sentiment_i_j(slist, count_s)
+  print aMatrix
   print "creating ngram..."
   ngram_dict= train.ngrams_index(slist,3)
   print "OBSERVATIONS"
   observations= obs_map.max_each_sent(ngram_dict,slist)
   print observations
   print "OBS PROBS"
+  b_matrix= train.observation_state(observations, slist,count_s)
+  print "trying to find the sents"
+  back_trace= test.virterbiTotal(aMatrix, b_matrix, observations)
+  print back_trace
+
   #print train.observation_state(observations,slist,count_s)
   
