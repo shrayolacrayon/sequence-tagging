@@ -61,7 +61,7 @@ def place_sentence(sentence, full_list, sentence_index, chunked_features, c):
   freq_sent = sort_sentence(sentece)
   index = 0
   while index < len(freq_sent):
-    for i, listed in enumerate(chunked_features)
+    for i, listed in enumerate(chunked_features):
       string, _ = freq_sent[index]
       if string in listed:
         full_list[i] = full_list[i] + [sentence_index]
@@ -69,9 +69,62 @@ def place_sentence(sentence, full_list, sentence_index, chunked_features, c):
     index += 1
   add_to_end(full_list, sentence, c)
 
-def place_all_sentences(slist):
+
+def place_all_sentences(slist, chunked_features, capacity):
   full_list = []
-  for s in slist:
+  for i,s in enumerate(slist):
+    place_sentence(s,full_list,i,chunked_features, capacity)
+
+def add_sentence(s,observation, n):
+  observation[n] = observation[n] + [s]
+
+#observations: [one pos, one neg, one neutral, onepos-oneneg,more than one pos, more than one neg, more than one neutral, unknown]
+def place_by_features(polar, sentence, observation,index):
+  pos = 0
+  neg = 0
+  neutral = 0
+  for p in polar['pos']:
+    if p in sentence:
+      pos += 1
+  for n in polar['neg']:
+    neg += 1
+  for n in polar['neut']:
+    neutral += 1
+  tupled = (pos,neg,neutral)
+
+  print tupled
+  if tupled == (1,0,0):
+    #one positive
+    add_sentence(index, observation, 0)
+  elif tupled == (1,1,0):
+    add_sentence(index, observation,3)
+  elif tupled == (0,1,0):
+    add_sentence(index,observation, 1)
+  elif tupled == (0,0,1):
+    add_sentence(index,observation, 2)
+  elif pos > 1:
+    add_sentence(index, observation, 4)
+  elif neg > 1:
+    add_sentence(index,observation,5)
+  elif neutral > 1: 
+    add_sentence(index, observation, 6)
+  else:
+    add_sentence(index, observation, 7)
+
+def place_all_features(slist, polar):
+  observation = [[]] * 8
+  for i,s in enumerate(slist):
+    place_by_features(polar,s,observation,i)
+  return observation
+
+  
+
+
+
+
+
+
+
 
 
 

@@ -4,7 +4,7 @@ from nltk.tokenize import word_tokenize
 import parse
 import operator
 from nltk.corpus import wordnet as wn
-(ratings, sentiments, sent_list)= parse.parse('train/ScottRenshaw_train.txt')
+#(ratings, sentiments, sent_list)= parse.parse('train/ScottRenshaw_train.txt')
 
 #get the num occurrances of a token t in that value
 def get(t, val, uni):
@@ -28,7 +28,7 @@ def add(sent, val, uni, count):
                         uni["all"][t]=1
 
 #Create unigram distribution table
-def train(sents):
+def train(sentiments):
         uni={-2:{},-1:{},-0:{},1:{},2:{},"all":{}}
         count={-2:0,-1:0,0:0,1:0,2:0,"all":0}
         for RID, sents in sentiments.iteritems():
@@ -69,9 +69,10 @@ def countpolar(sent, polars):
                         neut=neut+1
         return [pos, neg, neut]
 
-print "loading training data..."
-u,c=train(sentiments)
-print "DONE!"
-print "getting word types..."
-ps=wordTypes(u,c)
-print "DONE!"
+#print "loading training data..."
+#u,c=train(sentiments)
+#print "DONE!"
+#print "getting word types..."
+#ps=wordTypes(u,c)
+#print ps
+#print "DONE!"

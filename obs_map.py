@@ -59,13 +59,13 @@ def max_each_sent(ngram_dict, slist):
       obs_index.append(o_i)
     list_index += 1
   new_obs, new_ind, unknown_ind = condense_singles(obs_index, observations)
-  return new_obs, new_ind, ngrams[:unknown_ind], unknown_ind
+  return obs, obs_index, ngrams[:unknown_ind], unknown_ind
 
 
 #ngrams is the list of definite ngrams 
 def group_by_ngrams(ngram_dict, slist, ngrams, unknown_ind, bound):
   mapped = [[]] * bound
-  sorted_list = dict_to_tuple(ngram_dict)t
+  sorted_list = dict_to_tuple(ngram_dict)
   added = [0] * len(slist)
   list_index = 0
   for amt, ngram in sorted_list:
