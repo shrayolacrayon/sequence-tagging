@@ -45,7 +45,7 @@ def wordTypes(uni, count):
                 vals={}
                 verb=wn.synsets(tok, pos=wn.ADJ)
                 adv=wn.synsets(tok, pos=wn.ADV)
-                if len(verb)!=0 or len(adv)!=0:
+                if 1:
                         for i in [-2,-1,0,1,2]:
                                 vals[i]=get(tok, i, uni)
                         #determine if a word is pos, neg or neutral
