@@ -74,8 +74,10 @@ def place_sentence(sentence, full_list, ind_list, sentence_index, chunked_featur
 
 def takeout(tlist, observations, obs_ind):
   for i,t in enumerate(tlist):
-    observations[i] = []
-    obs_ind[i] = []
+    print len(observations)
+    observations.remove(observations[t])
+    obs_ind.remove(obs_ind[t])
+    print len(observations)
 
 def place_all_sentences(slist, polar, capacity, tout):
 
@@ -89,7 +91,7 @@ def place_all_sentences(slist, polar, capacity, tout):
     takeout(tout,full_list, ind_list)
   else:
     for i,f in enumerate(full_list):
-      if f == [] or f == None:
+      if f == [] or f == None or len(f) == 0:
         tout.append(i)
     full_list = filter(None, full_list)
     ind_list = filter(None, ind_list)
