@@ -126,7 +126,7 @@ def place_all_features(slist, polar):
   for i,s in enumerate(slist):
     sentence, state = s
     place_by_features(polar,sentence,observation,i,s, obs_ind)
-  return observation
+  return observation, obs_ind
 
 
   
