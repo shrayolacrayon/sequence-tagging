@@ -8,6 +8,7 @@ import train
 import test
 import obs_map
 import file_Maker
+import polarize
 
 path = 'train/'
 testpath = 'test/'
@@ -15,6 +16,7 @@ testing = 'test_train/'
 listing = os.listdir(path)
 testlisting = os.listdir(testpath)
 #iterate through listing
+"""
 for fname in listing:
   ratings,sents, slist=  parse.parse(path + fname)
   #print sents
@@ -47,17 +49,20 @@ for fname in listing:
   #print initProbs
   print "trying to find the sents"
   back_trace= test.virterbiTotal(aMatrix, b_matrix, testGrouped,initProbs)
-  print back_trace
+  #print back_trace
   print "creating results textFile"
   file_Maker.findIndex(slistTest,testGrouped,testing+fname,back_trace)
-
+"""
 for fname in listing:
   ratings,sents, slist=  parse.parse(path + fname)
+  fileName=""
   #print sents
   if fname == "DennisSchwartz_train.txt":
     ratingsTest, sentsTest, slistTest= parse.parse(testpath + "DennisSchwartz_test.txt")
+    fileName= "DennisSchwartz_test2.txt"
   else:
     ratingsTest, sentsTest, slistTest= parse.parse(testpath + "ScottRenshaw_test.txt")
+    fileName= "ScottRenshaw_test2.txt"
   print "Length of slist at the top: "+str(len(slist))
   print "RATINGS"
   print "SENTS"
@@ -73,7 +78,7 @@ for fname in listing:
   print "OBSERVATIONS"
   u,c=polarize.train(sents)
   ps = polarize.wordTypes(u,c)
-  observations = parse_features.place_all_features(slist,ps)
+  observations,obsIndex = parse_features.place_all_features(slist,ps)
   
   #print observations
   #print obs_indexes
@@ -83,13 +88,13 @@ for fname in listing:
   initProbs= train.initialProb(sents)
   print "finding the test sentences via observations..."
   #testGrouped= obs_map.group_by_ngrams(ngram_dict, slist, nGramUnknown, unknownIndex, len(observations))
-  observationsTest= parse_features.place_all_features(slistTest,ps)
+  observationsTest, obsTestIndex= parse_features.place_all_features(slistTest,ps)
   #print initProbs
   print "trying to find the sents"
-  back_trace= test.virterbiTotal(aMatrix, b_matrix, observationsTest,initProbs)
-  print back_trace
+  back_trace= test.virterbiTotal(aMatrix, b_matrix, obsTestIndex,initProbs)
+  #print back_trace
   print "creating results textFile"
-  file_Maker.findIndex(slistTest,testGrouped,testing+fname,back_trace)
+  file_Maker.findIndex(slistTest,obsTestIndex,testing+fileName,back_trace)
 
 
   #print train.observation_state(observations,slist,count_s)
