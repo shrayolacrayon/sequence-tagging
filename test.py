@@ -24,11 +24,12 @@ def virterbiTotal(aMatrix, bMatrix, observationList, initProbs):
 def createBackTrack(backPointer,observationList):
 	back=[backPointer["final"]]
 	last= backPointer["final"]
-	for t in range(2,len(observationList)):
+	for t in range(1,len(observationList)):
 		current= backPointer[last][len(observationList)-t]
 		back.append(current)
 		last= current
-	return back.reverse()
+	return back
+	#return back.reverse()
 
 
 def virterbiMax(vertMatrix, counter, aMatrix, s):
