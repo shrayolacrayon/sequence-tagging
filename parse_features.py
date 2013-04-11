@@ -83,6 +83,7 @@ def place_by_features(polar, sentence, observation,index):
   pos = 0
   neg = 0
   neutral = 0
+  print polar
   for p in polar['pos']:
     if p in sentence:
       pos += 1
@@ -91,8 +92,7 @@ def place_by_features(polar, sentence, observation,index):
   for n in polar['neut']:
     neutral += 1
   tupled = (pos,neg,neutral)
-
-  print tupled
+  
   if tupled == (1,0,0):
     #one positive
     add_sentence(index, observation, 0)
@@ -114,7 +114,8 @@ def place_by_features(polar, sentence, observation,index):
 def place_all_features(slist, polar):
   observation = [[]] * 8
   for i,s in enumerate(slist):
-    place_by_features(polar,s,observation,i)
+    sentence, state = s
+    place_by_features(polar,sentence,observation,i)
   return observation
 
   
