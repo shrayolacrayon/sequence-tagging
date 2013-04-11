@@ -17,7 +17,7 @@ testing = 'test_train/'
 listing = os.listdir(path)
 testlisting = os.listdir(testpath)
 #iterate through listing
-
+"""
 for fname in listing:
   ratings,sents, slist=  parse.parse(path + fname)
   #print sents
@@ -184,7 +184,7 @@ for fname in listing:
   print "creating results textFile"
   file_Maker.findIndex(slistTest,obsTestIndex,testing+fileName,back_trace)
   #print train.observation_state(observations,slist,count_s)
-
+"""
 for fname in listing:
   ratings,sents, slist=  parse.parse(path + fname)
   fileName=""
@@ -210,8 +210,11 @@ for fname in listing:
   print "OBSERVATIONS"
   u,c=polarize.train(sents)
   ps = polarize.wordTypes(u,c)
-  observations,obsIndex = parse_features.place_all_features(slist,ps)
+  observations,obsIndex, tout= parse_features.place_all_sentences(slist,ps,100,[])
   
+
+
+
   #print observations
   #print obs_indexes
   print "OBS PROBS"
@@ -220,7 +223,7 @@ for fname in listing:
   initProbs= train.initialProb(sents)
   print "finding the test sentences via observations..."
   #testGrouped= obs_map.group_by_ngrams(ngram_dict, slist, nGramUnknown, unknownIndex, len(observations))
-  observationsTest, obsTestIndex= parse_features.place_all_features(slistTest,ps)
+  observationsTest, obsTestIndex, toutTest= parse_features.place_all_sentences(slistTest,ps,100, tout)
   print "I LLLLLLOOOOOOOOOVVVVVVVEEEEEE OBS"
   #for o in range(0, len(obsTestIndex)):
     #print obsTestIndex[o]
