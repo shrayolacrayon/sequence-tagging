@@ -67,7 +67,10 @@ def normalize(matrix):
   normalized= [0.0] * len(matrix)
   summed = sum(matrix)
   for i,m in enumerate(matrix):
-    normalized[i] = float(m)/summed
+    if summed != 0:
+      normalized[i] = float(m)/summed
+    else:
+      print "issue with" + str(matrix)
   return normalized
 
 def count_sents(slist, s_count):
