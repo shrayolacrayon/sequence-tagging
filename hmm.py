@@ -32,7 +32,7 @@ for fname in listing:
   aMatrix= train.sentiment_i_j(slist, count_s)
   #print aMatrix
   print "creating ngram..."
-  ngram_dict= train.ngrams_index(slist,2)
+  ngram_dict= train.ngrams_index(slist,1)
   
   print "OBSERVATIONS"
   observations, obs_indexes, nGramUnknown, unknownIndex= obs_map.max_each_sent(ngram_dict,slist)
