@@ -74,9 +74,8 @@ def place_sentence(sentence, full_list, ind_list, sentence_index, chunked_featur
 
 
 def place_all_sentences(slist, polar, capacity):
-  chunked_features = group_features(polar['pos'], capacity)
-  chunked_features += group_features(polar['neg'], capacity)
-  chunked_features += group_features(polar['neut'], capacity)
+  full_set = polar['pos'] + polar['neg'] + polar['neut']
+  chunked_features = group_features(full_set, capacity)
   ind_list = [[]] * len(chunked_features)
   full_list = [[]] * len(chunked_features)
   for i,s in enumerate(slist):
