@@ -10,11 +10,11 @@ def findIndex(slist, observationList, fileName, backTrack):
 	print "The length of backtrack is : "+str(len(backTrack))
 	for t in range(0,len(slist)):
 		for o in range(0,len(observationList)):
-			print "OBBBBBBBBBBBSSSSSSSSSSSS"
-			print observationList[o]
+			#print "OBBBBBBBBBBBSSSSSSSSSSSS"
+			#print observationList[o]
 			if t in observationList[o]:
 				observationNumber= o
-				print "I GOTTTTT INNNNN"
+				#print "I GOTTTTT INNNNN"
 				#print "NUMBERRRRRR: "+str(observationNumber)
 				#sentenceNumber= observationList[o].index(t)
 				sentiment= backTrack[observationNumber]
