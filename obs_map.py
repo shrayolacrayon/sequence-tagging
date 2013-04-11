@@ -59,7 +59,7 @@ def max_each_sent(ngram_dict, slist):
       obs_index.append(o_i)
     list_index += 1
   new_obs, new_ind, unknown_ind = condense_singles(obs_index, observations)
-  return obs, obs_index, ngrams, unknown_ind
+  return observations, obs_index, ngrams, unknown_ind
 
 
 #ngrams is the list of definite ngrams 
