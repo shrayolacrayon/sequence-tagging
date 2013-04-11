@@ -79,7 +79,7 @@ def add_sentence(s,observation, n):
   observation[n] = observation[n] + [s]
 
 #observations: [one pos, one neg, one neutral, onepos-oneneg,more than one pos, more than one neg, more than one neutral, unknown]
-def place_by_features(polar, sentence, observation,index,s):
+def place_by_features(polar, sentence, observation,index,s, obs_ind):
   pos = 0
   neg = 0
   neutral = 0
@@ -97,26 +97,35 @@ def place_by_features(polar, sentence, observation,index,s):
   if pos == 1 and neg == 1:
     #one positive
     add_sentence(s, observation,3 )
+    add_sentence(s, obs_ind,3 )
   elif neg == 1 and pos == 0:
     add_sentence(s, observation,1)
+     add_sentence(s, obs_ind,1 )
   elif pos == 1:
     add_sentence(s,observation, 0)
+     add_sentence(s, obs_ind,0 )
   elif tupled == (0,0,1):
     add_sentence(s,observation, 2)
+     add_sentence(s, obs_ind,2 )
   elif pos > 1:
     add_sentence(s, observation, 4)
+     add_sentence(s, obs_ind,4 )
   elif neg > 1:
     add_sentence(s,observation,5)
+     add_sentence(s, obs_ind,5 )
   elif neutral > 1: 
     add_sentence(s, observation, 6)
+     add_sentence(s, obs_ind,6 )
   else:
     add_sentence(s, observation, 7)
+     add_sentence(s, obs_ind,7)
 
 def place_all_features(slist, polar):
   observation = [[]] * 8
+  obs_ind[[]] * 8
   for i,s in enumerate(slist):
     sentence, state = s
-    place_by_features(polar,sentence,observation,i,s)
+    place_by_features(polar,sentence,observation,i,s, obs_ind)
   return observation
 
 
