@@ -58,28 +58,29 @@ def sort_sentence(sentence):
 #figure out the frequency of each word
 #if its not in the features list, then add it to an arbitrary list
 #the arbitrary list can only have a max of 5 sentences in it
-def place_sentence(sentence, full_list, sentence_index, chunked_features, c):
+def place_sentence(sentence, full_list, ind_list, sentence_index, chunked_features, c):
   freq_sent = sort_sentence(sentence)
   index = 0
   while index < len(freq_sent):
     for i, listed in enumerate(chunked_features):
       string, _ = freq_sent[index]
       if string in listed:
-        full_list[i] = full_list[i] + [sentence_index]
+        full_list[i] = full_list[i] + [sentence]
+        ind_list[i] = ind_list[i] + [sentence_index]
         return
     index += 1
   add_to_end(full_list, sentence, c)
+  add_to_end(ind_list, sentence_index, c)
 
 
 def place_all_sentences(slist, polar, capacity):
-  chunked_features = group_features(polar['pos'], capacity)
-  chunked_features += group_features(polar['neg'], capacity)
-  chunked_features += group_features(polar['neut'], capacity)
-
+  full_set = polar['pos'] + polar['neg'] + polar['neut']
+  chunked_features = group_features(full_set, capacity)
+  ind_list = [[]] * len(chunked_features)
   full_list = [[]] * len(chunked_features)
   for i,s in enumerate(slist):
-    place_sentence(s,full_list,i,chunked_features, capacity)
-  return full_list
+    place_sentence(s,full_list, ind_list, i,chunked_features, capacity)
+  return full_list, ind_list
 
 def add_sentence(s,observation, n):
   observation[n] = observation[n] + [s]
