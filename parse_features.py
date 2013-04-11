@@ -58,7 +58,7 @@ def sort_sentence(sentence):
 #if its not in the features list, then add it to an arbitrary list
 #the arbitrary list can only have a max of 5 sentences in it
 def place_sentence(sentence, full_list, sentence_index, chunked_features, c):
-  freq_sent = sort_sentence(sentece)
+  freq_sent = sort_sentence(sentence)
   index = 0
   while index < len(freq_sent):
     for i, listed in enumerate(chunked_features):
@@ -70,7 +70,11 @@ def place_sentence(sentence, full_list, sentence_index, chunked_features, c):
   add_to_end(full_list, sentence, c)
 
 
-def place_all_sentences(slist, chunked_features, capacity):
+def place_all_sentences(slist, polar, capacity):
+  chunked_features = group_features(polar['pos'], capacity)
+  chunked_features += group_features(polar['neg'], capacity)
+  chunked_features += group_features(polar['neut'], capacity)
+
   full_list = []
   for i,s in enumerate(slist):
     place_sentence(s,full_list,i,chunked_features, capacity)
@@ -100,29 +104,29 @@ def place_by_features(polar, sentence, observation,index,s, obs_ind):
     add_sentence(s, obs_ind,3 )
   elif neg == 1 and pos == 0:
     add_sentence(s, observation,1)
-     add_sentence(s, obs_ind,1 )
+    add_sentence(s, obs_ind,1 )
   elif pos == 1:
     add_sentence(s,observation, 0)
-     add_sentence(s, obs_ind,0 )
+    add_sentence(s, obs_ind,0 )
   elif tupled == (0,0,1):
     add_sentence(s,observation, 2)
-     add_sentence(s, obs_ind,2 )
+    add_sentence(s, obs_ind,2 )
   elif pos > 1:
     add_sentence(s, observation, 4)
-     add_sentence(s, obs_ind,4 )
+    add_sentence(s, obs_ind,4 )
   elif neg > 1:
     add_sentence(s,observation,5)
-     add_sentence(s, obs_ind,5 )
+    add_sentence(s, obs_ind,5 )
   elif neutral > 1: 
     add_sentence(s, observation, 6)
-     add_sentence(s, obs_ind,6 )
+    add_sentence(s, obs_ind,6 )
   else:
     add_sentence(s, observation, 7)
-     add_sentence(s, obs_ind,7)
+    add_sentence(s, obs_ind,7)
 
 def place_all_features(slist, polar):
   observation = [[]] * 8
-  obs_ind[[]] * 8
+  obs_ind = [[]] * 8
   for i,s in enumerate(slist):
     sentence, state = s
     place_by_features(polar,sentence,observation,i,s, obs_ind)
