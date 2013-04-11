@@ -72,15 +72,30 @@ def place_sentence(sentence, full_list, ind_list, sentence_index, chunked_featur
   add_to_end(full_list, sentence, c)
   add_to_end(ind_list, sentence_index, c)
 
+def takeout(tlist, observations, obs_ind):
+  for t in tlist:
+    observations.remove(t)
+    obs_ind.remove(t)
 
-def place_all_sentences(slist, polar, capacity):
+def place_all_sentences(slist, polar, capacity, tout):
+
   full_set = polar['pos'] + polar['neg'] + polar['neut']
   chunked_features = group_features(full_set, capacity)
   ind_list = [[]] * len(chunked_features)
   full_list = [[]] * len(chunked_features)
   for i,s in enumerate(slist):
     place_sentence(s,full_list, ind_list, i,chunked_features, capacity)
-  return full_list, ind_list
+  if len(tout) >= 1:
+    takeout(tout,full_list, ind_list)
+  else:
+    for i,f in enumerate(full_list):
+      if f == [] or f == None:
+        tout.append(i)
+        full_list.remove(f)
+        ind_list.remove(f)
+  full_list = filter(None, full_list)
+  ind_list = filter(None, ind_list)
+  return full_list, ind_list, tout
 
 def add_sentence(s,observation, n):
   observation[n] = observation[n] + [s]
