@@ -33,22 +33,23 @@ for fname in listing:
   #print aMatrix
   print "creating ngram..."
   ngram_dict= train.ngrams_index(slist,2)
-  ngram_dictTest= train.ngrams_index(slistTest,2)
+  
   print "OBSERVATIONS"
-  observations, obs_indexes= obs_map.max_each_sent(ngram_dict,slist)
-  observationsTest, obs_indexesTest= obs_map.max_each_sent(ngram_dictTest,slistTest)
+  observations, obs_indexes, nGramUnknown, unknownIndex= obs_map.max_each_sent(ngram_dict,slist)
   #print observations
   #print obs_indexes
   print "OBS PROBS"
   b_matrix= train.observation_state(observations, slist,count_s)
   print "Initial Probabilities"
   initProbs= train.initialProb(sents)
+  print "finding the test sentences via observations..."
+  testGrouped= obs_map.group_by_ngrams(ngram_dict, slist, nGramUnknown, unknownIndex, len(observations))
   #print initProbs
   print "trying to find the sents"
-  back_trace= test.virterbiTotal(aMatrix, b_matrix, observationsTest,initProbs)
-  #print back_trace
+  back_trace= test.virterbiTotal(aMatrix, b_matrix, testGrouped,initProbs)
+  print back_trace
   print "creating results textFile"
-  file_Maker.findIndex(obs_indexesTest,slistTest,observationsTest,testing+fname,back_trace)
+  file_Maker.findIndex(slistTest,testGrouped,testing+fname,back_trace)
 
 
   #print train.observation_state(observations,slist,count_s)
