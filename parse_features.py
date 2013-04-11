@@ -94,13 +94,13 @@ def place_by_features(polar, sentence, observation,index,s):
       neutral += 1
   tupled = (pos,neg,neutral)
 
-  if tupled == (1,0,0):
+  if pos == 1 and neg == 1:
     #one positive
-    add_sentence(s, observation, 0)
-  elif tupled == (1,1,0):
-    add_sentence(s, observation,3)
-  elif tupled == (0,1,0):
-    add_sentence(s,observation, 1)
+    add_sentence(s, observation,3 )
+  elif neg == 1 and pos == 0:
+    add_sentence(s, observation,1)
+  elif pos == 1:
+    add_sentence(s,observation, 0)
   elif tupled == (0,0,1):
     add_sentence(s,observation, 2)
   elif pos > 1:
